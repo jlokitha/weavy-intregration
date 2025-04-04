@@ -68,4 +68,16 @@ public class UserController {
                     .body("Error listing users: " + e.getMessage());
         }
     }
+
+    // Delete User
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable("id") String id) {
+        try {
+            String response = userService.deleteUser(id);
+            return ResponseEntity.ok(response);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error deleting user: " + e.getMessage());
+        }
+    }
 }
