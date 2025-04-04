@@ -61,7 +61,16 @@ public class UserServiceIMPL implements UserService {
 
     @Override
     public String updateUser(String userId, String jsonPayload) throws IOException {
-        return "";
+        RequestBody body = RequestBody.create(jsonPayload, JSON);
+        Request request = new Request.Builder()
+                .url(baseUrl + "/" + userId)
+                .put(body)
+                .addHeader("Authorization", "Bearer " + apiToken)
+                .build();
+
+        try (Response response = httpClient.newCall(request).execute()) {
+            return response.body().string();
+        }
     }
 
     @Override

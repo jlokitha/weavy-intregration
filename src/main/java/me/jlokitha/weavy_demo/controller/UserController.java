@@ -44,4 +44,16 @@ public class UserController {
                     .body("Error retrieving user details: " + e.getMessage());
         }
     }
+
+    // Update User
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateUser(@PathVariable("id") String id, @RequestBody String jsonPayload) {
+        try {
+            String response = userService.updateUser(id, jsonPayload);
+            return ResponseEntity.ok(response);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error updating user: " + e.getMessage());
+        }
+    }
 }
