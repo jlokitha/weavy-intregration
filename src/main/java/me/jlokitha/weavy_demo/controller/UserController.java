@@ -26,7 +26,8 @@ public class UserController {
     public ResponseEntity<String> createUser(@RequestBody String jsonPayload) {
         try {
             String response = userService.createUser(jsonPayload);
-            return ResponseEntity.ok(response);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(response);
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error creating user: " + e.getMessage());
@@ -50,7 +51,7 @@ public class UserController {
     public ResponseEntity<String> updateUser(@PathVariable("id") String id, @RequestBody String jsonPayload) {
         try {
             String response = userService.updateUser(id, jsonPayload);
-            return ResponseEntity.ok(response);
+            return ResponseEntity.noContent().build();
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error updating user: " + e.getMessage());
@@ -74,7 +75,7 @@ public class UserController {
     public ResponseEntity<String> deleteUser(@PathVariable("id") String id) {
         try {
             String response = userService.deleteUser(id);
-            return ResponseEntity.ok(response);
+            return ResponseEntity.noContent().build();
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error deleting user: " + e.getMessage());
