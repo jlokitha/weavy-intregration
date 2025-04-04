@@ -42,8 +42,20 @@ public class UserServiceIMPL implements UserService {
     }
 
     @Override
-    public String listUsers() throws IOException {
-        return "";
+    public String listUsers(int take) throws IOException {
+        HttpUrl url = HttpUrl.parse(baseUrl).newBuilder()
+                .addQueryParameter("take", String.valueOf(take))
+                .build();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .addHeader("Authorization", "Bearer " + apiToken)
+                .build();
+
+        try (Response response = httpClient.newCall(request).execute()) {
+            return response.body().string();
+        }
     }
 
     @Override

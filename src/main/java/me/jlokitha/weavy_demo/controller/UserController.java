@@ -56,4 +56,16 @@ public class UserController {
                     .body("Error updating user: " + e.getMessage());
         }
     }
+
+    // List Users
+    @GetMapping()
+    public ResponseEntity<String> listUsers(@RequestParam("take") int take) {
+        try {
+            String response = userService.listUsers(take);
+            return ResponseEntity.ok(response);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error listing users: " + e.getMessage());
+        }
+    }
 }
