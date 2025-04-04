@@ -32,4 +32,16 @@ public class UserController {
                     .body("Error creating user: " + e.getMessage());
         }
     }
+
+    // Get User Details
+    @GetMapping("/{id}")
+    public ResponseEntity<String> getUserDetails(@PathVariable("id") String id) {
+        try {
+            String response = userService.getUserDetails(id);
+            return ResponseEntity.ok(response);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error retrieving user details: " + e.getMessage());
+        }
+    }
 }

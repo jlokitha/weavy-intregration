@@ -48,7 +48,15 @@ public class UserServiceIMPL implements UserService {
 
     @Override
     public String getUserDetails(String userId) throws IOException {
-        return "";
+        Request request = new Request.Builder()
+                .url(baseUrl + "/" + userId)
+                .get()
+                .addHeader("Authorization", "Bearer " + apiToken)
+                .build();
+
+        try (Response response = httpClient.newCall(request).execute()) {
+            return response.body().string();
+        }
     }
 
     @Override
